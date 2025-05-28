@@ -4,52 +4,54 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Электроаппарат</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: "Segoe UI", sans-serif;
-      background: radial-gradient(ellipse at center, #0a0f1a 0%, #070a12 100%);
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .container {
-      text-align: center;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 40px;
-      border-radius: 16px;
-      box-shadow: 0 0 40px #0ff2ff55;
-    }
-    h1 {
-      font-size: 36px;
-      margin-bottom: 10px;
-    }
-    p {
-      color: #ccc;
-      margin-bottom: 40px;
-    }
-    .button {
-      padding: 12px 24px;
-      background-color: #00e0ff;
-      color: #000;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .button:hover {
-      background-color: #0ff2ff;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h1>Электроаппарат</h1>
-    <p>Имбовая версия 2028 от NerSz</p>
-    <button class="button" onclick="alert('Загружается калькулятор...')">Открыть калькулятор</button>
+    <h1>Добро пожаловать в SyntaxStage App</h1>
+    <p>Это первая имбовая версия 2028 от NerSz</p>
+
+    <div class="button-grid">
+      <button class="button" onclick="openCalculator()">Калькулятор</button>
+      <button class="button" onclick="openCenters()">Рабочие центры</button>
+    </div>
+
+    <div id="calculator" class="hidden">
+      <h2>Калькулятор по металлу</h2>
+      <input type="number" id="length" placeholder="Длина, мм" />
+      <input type="number" id="width" placeholder="Ширина, мм" />
+      <input type="number" id="thickness" placeholder="Толщина, мм" />
+      <input type="number" id="density" placeholder="Плотность, г/см³ (по умолч. 7.85)" />
+      <button onclick="calculateWeight()">Рассчитать</button>
+      <p id="result"></p>
+    </div>
   </div>
+
+  <script>
+    function openCalculator() {
+      document.getElementById('calculator').classList.remove('hidden');
+    }
+
+    function openCenters() {
+      alert("Модуль 'Рабочие центры' пока в разработке");
+    }
+
+    function calculateWeight() {
+      const length = parseFloat(document.getElementById('length').value) / 10; // мм в см
+      const width = parseFloat(document.getElementById('width').value) / 10;
+      const thickness = parseFloat(document.getElementById('thickness').value) / 10;
+      const density = parseFloat(document.getElementById('density').value) || 7.85;
+
+      if (isNaN(length) || isNaN(width) || isNaN(thickness)) {
+        document.getElementById('result').textContent = "Введите все размеры!";
+        return;
+      }
+
+      const volume = length * width * thickness; // в см³
+      const mass = volume * density / 1000; // в кг
+
+      document.getElementById('result').textContent = `Масса заготовки: ${mass.toFixed(2)} кг`;
+    }
+  </script>
 </body>
 </html>
