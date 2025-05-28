@@ -1,55 +1,85 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Электроаппарат</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: "Segoe UI", sans-serif;
-      background: radial-gradient(ellipse at center, #0a0f1a 0%, #070a12 100%);
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .container {
-      text-align: center;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 40px;
-      border-radius: 16px;
-      box-shadow: 0 0 40px #0ff2ff55;
-    }
-    h1 {
-      font-size: 36px;
-      margin-bottom: 10px;
-    }
-    p {
-      color: #ccc;
-      margin-bottom: 40px;
-    }
-    .button {
-      padding: 12px 24px;
-      background-color: #00e0ff;
-      color: #000;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .button:hover {
-      background-color: #0ff2ff;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>Электроаппарат</h1>
-    <p>Имбовая версия 2028 от NerSz</p>
-    <button class="button" onclick="alert('Загружается калькулятор...')">Открыть калькулятор</button>
-  </div>
-</body>
-</html>
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: radial-gradient(ellipse at center, #0a0f1a 0%, #06070d 100%);
+  color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100vh;
+  padding-top: 60px;
+}
+
+.container {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 30px 40px;
+  box-shadow: 0 0 20px rgba(0, 153, 255, 0.3);
+  backdrop-filter: blur(10px);
+  width: 400px;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #00ccff;
+}
+
+h2 {
+  font-size: 20px;
+  color: #ffffff;
+  margin-top: 25px;
+}
+
+p {
+  font-size: 14px;
+  color: #aaa;
+}
+
+.button-grid {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 25px;
+}
+
+.button {
+  background-color: #007acc;
+  border: none;
+  color: white;
+  padding: 12px 18px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.button:hover {
+  background-color: #00c3ff;
+  box-shadow: 0 0 10px #00c3ff;
+}
+
+input {
+  width: calc(100% - 20px);
+  margin: 6px 0;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+}
+
+.hidden {
+  display: none;
+}
+
+#result {
+  margin-top: 15px;
+  font-size: 16px;
+  color: #00eaff;
+}
