@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Электроаппарат</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: radial-gradient(ellipse at center, #0a0f1a 0%, #070a12 100%);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 0 40px #0ff2ff55;
+    }
+    h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+    p {
+      color: #ccc;
+      margin-bottom: 40px;
+    }
+    .button {
+      padding: 12px 24px;
+      background-color: #00e0ff;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .button:hover {
+      background-color: #0ff2ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Электроаппарат</h1>
+    <p>Имбовая версия 2028 от NerSz</p>
+    <button class="button" onclick="alert('Загружается калькулятор...')">Открыть калькулятор</button>
+  </div>
+</body>
+</html>
