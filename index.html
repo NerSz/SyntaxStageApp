@@ -509,3 +509,659 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>ЭА — Техпроцессы</title>
+  <style>
+    body {
+      background: #181818;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #00e0ff;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: #1f1f1f;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 0 20px rgba(0, 224, 255, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      margin-top: 5px;
+      border-radius: 6px;
+      background: #2a2a2a;
+      color: #eee;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      font-size: 16px;
+      background-color: #00e0ff;
+      border: none;
+      color: #000;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #00aacc;
+    }
+
+    .archive {
+      margin-top: 40px;
+      padding: 20px;
+      background: #242424;
+      border-radius: 8px;
+    }
+
+    .item {
+      padding: 10px;
+      margin-bottom: 10px;
+      border-left: 4px solid #00e0ff;
+      background: #2a2a2a;
+      border-radius: 6px;
+    }
+
+    .item pre {
+      white-space: pre-wrap;
+      font-size: 13px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>🛠️ ЭА — Технологические процессы</h1>
+
+    <label for="partNumber">Номер детали:</label>
+    <input type="text" id="partNumber" />
+
+    <label for="partName">Наименование детали:</label>
+    <input type="text" id="partName" />
+
+    <label for="material">Материал:</label>
+    <input type="text" id="material" />
+
+    <label for="operations">Операции (через запятую):</label>
+    <textarea id="operations" rows="2"></textarea>
+
+    <label for="version">Исполнение:</label>
+    <input type="text" id="version" />
+
+    <label for="note">Примечание:</label>
+    <textarea id="note" rows="2"></textarea>
+
+    <button onclick="saveDetail()">Сохранить</button>
+    <button onclick="downloadArchive()">📦 Выгрузить архив</button>
+
+    <div class="archive" id="archive">
+      <h2>📚 Архив деталей</h2>
+    </div>
+  </div>
+
+  <script>
+    let archive = JSON.parse(localStorage.getItem("eaArchive") || "[]");
+
+    function saveDetail() {
+      const detail = {
+        номер: document.getElementById("partNumber").value,
+        наименование: document.getElementById("partName").value,
+        материал: document.getElementById("material").value,
+        операции: document.getElementById("operations").value,
+        исполнение: document.getElementById("version").value,
+        примечание: document.getElementById("note").value,
+        дата: new Date().toLocaleString()
+      };
+
+      archive.push(detail);
+      localStorage.setItem("eaArchive", JSON.stringify(archive));
+      renderArchive();
+      clearForm();
+    }
+
+    function renderArchive() {
+      const container = document.getElementById("archive");
+      container.innerHTML = '<h2>📚 Архив деталей</h2>';
+      archive.slice().reverse().forEach(item => {
+        const div = document.createElement("div");
+        div.className = "item";
+        div.innerHTML = `<pre>${JSON.stringify(item, null, 2)}</pre>`;
+        container.appendChild(div);
+      });
+    }
+
+    function clearForm() {
+      document.getElementById("partNumber").value = '';
+      document.getElementById("partName").value = '';
+      document.getElementById("material").value = '';
+      document.getElementById("operations").value = '';
+      document.getElementById("version").value = '';
+      document.getElementById("note").value = '';
+    }
+
+    function downloadArchive() {
+      const blob = new Blob([JSON.stringify(archive, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "ea_archive.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    renderArchive();
+  </script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>ЭА — Инструменты</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #101010;
+      color: #eee;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      color: #00e0ff;
+      border-bottom: 1px solid #333;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .tab {
+      margin: 0 10px;
+      padding: 10px 20px;
+      background: #1b1b1b;
+      border: 1px solid #00e0ff;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .tab:hover, .tab.active {
+      background: #00e0ff;
+      color: #000;
+    }
+
+    .content {
+      max-width: 1100px;
+      margin: auto;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 224, 255, 0.05);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #333;
+      text-align: left;
+    }
+
+    th {
+      background: rgba(0, 224, 255, 0.1);
+    }
+
+    tr:hover {
+      background: rgba(0, 224, 255, 0.05);
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<header>🧰 Инструменты ЭА</header>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('measure')">Мерительные</div>
+  <div class="tab" onclick="showTab('cut')">Режущие</div>
+</div>
+
+<div class="content">
+  <div id="measure">
+    <h2>📏 Мерительные инструменты</h2>
+    <table>
+      <tr><th>Наименование</th><th>Диапазон</th><th>Класс точности</th></tr>
+      <tr><td>Штангенциркуль</td><td>0–150 мм</td><td>0.05</td></tr>
+      <tr><td>Микрометр</td><td>0–25 мм</td><td>0.01</td></tr>
+      <tr><td>Калибр-пробка</td><td>M16x1.5</td><td>7H</td></tr>
+    </table>
+  </div>
+
+  <div id="cut" class="hidden">
+    <h2>🪚 Режущие инструменты</h2>
+    <table>
+      <tr><th>Тип</th><th>Размер</th><th>ГОСТ</th></tr>
+      <tr><td>Резец отрезной</td><td>20×12×120</td><td>ГОСТ 18884–73</td></tr>
+      <tr><td>Сверло спиральное</td><td>Ø10 мм</td><td>ГОСТ 10902–77</td></tr>
+      <tr><td>Плашка круглая</td><td>M12×1.75</td><td>ГОСТ 9740–71</td></tr>
+    </table>
+  </div>
+</div>
+
+<script>
+  function showTab(id) {
+    document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.content > div').forEach(el => el.classList.add('hidden'));
+    document.getElementById(id).classList.remove('hidden');
+    document.querySelector(`.tab[onclick*="${id}"]`).classList.add('active');
+  }
+</script>
+
+</body>
+</html>
+<!-- ЧАСТЬ 6 — Блок: Трудоёмкость и калькуляторы -->
+<section id="calculation" style="
+  margin: 100px auto;
+  padding: 40px;
+  max-width: 1100px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 0 40px rgba(0, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  text-align: center;
+  transition: all 0.4s ease;
+">
+  <h2 style="
+    font-size: 26px;
+    color: #ffffffcc;
+    margin-bottom: 24px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 500;
+  ">Трудоёмкость и калькуляторы</h2>
+
+  <div style="
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 25px;
+  ">
+    <a href="#metal-calc" style="
+      padding: 20px 32px;
+      font-size: 16px;
+      color: #fff;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #00ffc3, #00a6ff);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+      text-decoration: none;
+      font-weight: 500;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    " onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 30px rgba(0,255,255,0.4)';"
+    onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 20px rgba(0,255,255,0.1)';"
+    >
+      Расчёт металла
+    </a>
+
+    <a href="#custom-calc" style="
+      padding: 20px 32px;
+      font-size: 16px;
+      color: #fff;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #ff00c8, #7b00ff);
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.1);
+      text-decoration: none;
+      font-weight: 500;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    " onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 30px rgba(255,0,255,0.4)';"
+    onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 20px rgba(255,0,255,0.1)';"
+    >
+      Индивидуальные расчёты
+    </a>
+  </div>
+</section>
+<!-- ЧАСТЬ 7 — Расчёт металла -->
+<section id="metal-calc" style="
+  margin: 80px auto;
+  padding: 40px;
+  max-width: 1100px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #fff;
+">
+  <h2 style="
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #ffffffdd;
+    font-weight: 500;
+    letter-spacing: 1px;
+  ">Калькулятор массы металла</h2>
+
+  <form id="calc-form" style="display: flex; flex-direction: column; gap: 16px;">
+    <label>Форма:
+      <select id="shape" style="padding: 10px; width: 100%; border-radius: 10px;">
+        <option value="sheet">Лист</option>
+        <option value="pipe">Труба</option>
+        <option value="circle">Круг</option>
+        <option value="square">Квадрат</option>
+        <option value="angle">Уголок</option>
+      </select>
+    </label>
+
+    <label>Длина (мм):
+      <input type="number" id="length" required style="padding: 10px; width: 100%; border-radius: 10px;">
+    </label>
+
+    <label>Ширина / Диаметр (мм):
+      <input type="number" id="width" required style="padding: 10px; width: 100%; border-radius: 10px;">
+    </label>
+
+    <label>Толщина стенки / Листа (мм):
+      <input type="number" id="thickness" required style="padding: 10px; width: 100%; border-radius: 10px;">
+    </label>
+
+    <label>Плотность (г/см³):
+      <input type="number" step="0.01" id="density" value="7.85" required style="padding: 10px; width: 100%; border-radius: 10px;">
+    </label>
+
+    <button type="submit" style="
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #00ffc8, #00b2ff);
+      color: #000;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    ">Рассчитать массу</button>
+  </form>
+
+  <p id="result" style="
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #0f0;
+  "></p>
+</section>
+
+<script>
+  document.getElementById("calc-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const shape = document.getElementById("shape").value;
+    const length = parseFloat(document.getElementById("length").value) / 1000;
+    const width = parseFloat(document.getElementById("width").value) / 1000;
+    const thickness = parseFloat(document.getElementById("thickness").value) / 1000;
+    const density = parseFloat(document.getElementById("density").value) * 1000;
+
+    let volume = 0;
+
+    switch (shape) {
+      case "sheet":
+        volume = length * width * thickness;
+        break;
+      case "pipe":
+        const outerRadius = width / 2;
+        const innerRadius = outerRadius - thickness;
+        volume = Math.PI * (outerRadius**2 - innerRadius**2) * length;
+        break;
+      case "circle":
+        volume = Math.PI * Math.pow(width / 2, 2) * length;
+        break;
+      case "square":
+        volume = width * width * length;
+        break;
+      case "angle":
+        volume = (width * thickness * length) * 2;
+        break;
+    }
+
+    const mass = (volume * density).toFixed(2);
+    document.getElementById("result").textContent = `Масса: ${mass} кг`;
+  });
+</script>
+<!-- ЧАСТЬ 8 — Рабочие центры -->
+<section id="work-centers" style="
+  margin: 80px auto;
+  padding: 40px;
+  max-width: 1100px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #fff;
+">
+  <h2 style="
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #ffffffdd;
+    font-weight: 500;
+    letter-spacing: 1px;
+  ">Рабочие центры</h2>
+
+  <div style="overflow-x: auto;">
+    <table style="
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14px;
+      color: #ffffffdd;
+    ">
+      <thead>
+        <tr style="background-color: rgba(255, 255, 255, 0.05);">
+          <th style="padding: 12px 16px;">Код участка</th>
+          <th style="padding: 12px 16px;">Наименование участка</th>
+          <th style="padding: 12px 16px;">Код ТКК</th>
+          <th style="padding: 12px 16px;">Производственный контроль</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="transition: background 0.3s;" onmouseover="this.style.backgroundColor='rgba(255,255,255,0.05)'" onmouseout="this.style.backgroundColor='transparent'">
+          <td style="padding: 10px 16px;">06</td>
+          <td style="padding: 10px 16px;">Цех №6 механика</td>
+          <td style="padding: 10px 16px;">T01</td>
+          <td style="padding: 10px 16px;">Участок входного контроля</td>
+        </tr>
+        <tr style="transition: background 0.3s;" onmouseover="this.style.backgroundColor='rgba(255,255,255,0.05)'" onmouseout="this.style.backgroundColor='transparent'">
+          <td style="padding: 10px 16px;">04</td>
+          <td style="padding: 10px 16px;">Цех №4 сборка трансформаторов</td>
+          <td style="padding: 10px 16px;">T02</td>
+          <td style="padding: 10px 16px;">Участок сборочного контроля</td>
+        </tr>
+        <tr style="transition: background 0.3s;" onmouseover="this.style.backgroundColor='rgba(255,255,255,0.05)'" onmouseout="this.style.backgroundColor='transparent'">
+          <td style="padding: 10px 16px;">05</td>
+          <td style="padding: 10px 16px;">Цех №5 Сборка</td>
+          <td style="padding: 10px 16px;">T03</td>
+          <td style="padding: 10px 16px;">Контроль готовой продукции</td>
+        </tr>
+        <tr style="transition: background 0.3s;" onmouseover="this.style.backgroundColor='rgba(255,255,255,0.05)'" onmouseout="this.style.backgroundColor='transparent'">
+          <td style="padding: 10px 16px;">10</td>
+          <td style="padding: 10px 16px;">Отдел испытаний</td>
+          <td style="padding: 10px 16px;">T04</td>
+          <td style="padding: 10px 16px;">Испытательная лаборатория</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<!-- ЧАСТЬ 9 — Инструменты ЭА -->
+<section id="tools" style="
+  padding: 60px 20px;
+  max-width: 1100px;
+  margin: auto;
+  text-align: center;
+  color: #fff;
+">
+  <h2 style="
+    font-size: 24px;
+    margin-bottom: 40px;
+    color: #ffffffdd;
+    font-weight: 500;
+    letter-spacing: 1px;
+  ">Инструменты ЭА</h2>
+
+  <div style="
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+  ">
+    <div onclick="toggleList('measuring-tools')" style="
+      cursor: pointer;
+      width: 300px;
+      padding: 25px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.03);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.3s ease;
+    " onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+      <h3 style="margin: 0; color: #ffffffee;">Мерительные инструменты</h3>
+    </div>
+
+    <div onclick="toggleList('cutting-tools')" style="
+      cursor: pointer;
+      width: 300px;
+      padding: 25px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.03);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.3s ease;
+    " onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+      <h3 style="margin: 0; color: #ffffffee;">Режущие инструменты</h3>
+    </div>
+  </div>
+
+  <div id="measuring-tools" style="display: none; margin-top: 40px; text-align: left;">
+    <h4 style="color: #ffffffcc;">Примеры мерительных инструментов:</h4>
+    <ul>
+      <li>Штангенциркуль</li>
+      <li>Микрометр</li>
+      <li>Глубиномер</li>
+      <li>Калибр-пробка</li>
+    </ul>
+  </div>
+
+  <div id="cutting-tools" style="display: none; margin-top: 40px; text-align: left;">
+    <h4 style="color: #ffffffcc;">Примеры режущих инструментов:</h4>
+    <ul>
+      <li>Фреза концевая</li>
+      <li>Сверло ступенчатое</li>
+      <li>Плашка резьбонарезная</li>
+      <li>Резец проходной</li>
+    </ul>
+  </div>
+</section>
+
+<script>
+  function toggleList(id) {
+    document.getElementById('measuring-tools').style.display = 'none';
+    document.getElementById('cutting-tools').style.display = 'none';
+    document.getElementById(id).style.display = 'block';
+  }
+</script>
+<!-- ЧАСТЬ 10 — Трудоёмкость: выбор формы материала -->
+<section id="calculator" style="
+  padding: 60px 20px;
+  max-width: 1100px;
+  margin: auto;
+  text-align: center;
+  color: #fff;
+">
+  <h2 style="
+    font-size: 24px;
+    margin-bottom: 40px;
+    color: #ffffffdd;
+    font-weight: 500;
+    letter-spacing: 1px;
+  ">Калькулятор по металлу</h2>
+
+  <p style="margin-bottom: 30px; color: #cccccc;">Выберите форму заготовки для расчёта массы</p>
+
+  <div style="
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  ">
+    <button onclick="selectShape('sheet')" style="padding: 15px 25px; border-radius: 12px; background: #1c1c1e; border: 1px solid #555; color: #fff; cursor: pointer;">Лист</button>
+    <button onclick="selectShape('pipe')" style="padding: 15px 25px; border-radius: 12px; background: #1c1c1e; border: 1px solid #555; color: #fff; cursor: pointer;">Труба</button>
+    <button onclick="selectShape('round')" style="padding: 15px 25px; border-radius: 12px; background: #1c1c1e; border: 1px solid #555; color: #fff; cursor: pointer;">Круг</button>
+    <button onclick="selectShape('angle')" style="padding: 15px 25px; border-radius: 12px; background: #1c1c1e; border: 1px solid #555; color: #fff; cursor: pointer;">Уголок</button>
+  </div>
+
+  <div id="calc-form" style="margin-top: 40px;">
+    <!-- Следующая часть будет содержать конкретную форму -->
+  </div>
+</section>
+
+<script>
+  function selectShape(shape) {
+    const form = document.getElementById("calc-form");
+    if (shape === 'sheet') {
+      form.innerHTML = `
+        <h3 style="margin: 20px 0; color: #fff;">Расчёт массы листа</h3>
+        <input type="number" placeholder="Длина (мм)" id="length" style="margin: 5px; padding: 10px; width: 200px;" />
+        <input type="number" placeholder="Ширина (мм)" id="width" style="margin: 5px; padding: 10px; width: 200px;" />
+        <input type="number" placeholder="Толщина (мм)" id="thickness" style="margin: 5px; padding: 10px; width: 200px;" />
+        <input type="number" placeholder="Плотность (г/см³)" id="density" style="margin: 5px; padding: 10px; width: 200px;" />
+        <br>
+        <button onclick="calculateSheetMass()" style="margin-top: 20px; padding: 12px 25px; background: #444; color: #fff; border: none; border-radius: 10px;">Рассчитать</button>
+        <p id="result" style="margin-top: 20px; color: #90ee90;"></p>
+      `;
+    } else {
+      form.innerHTML = `<p style="margin-top: 20px; color: #ccc;">Расчёт для выбранной формы пока в разработке.</p>`;
+    }
+  }
+
+  function calculateSheetMass() {
+    const L = parseFloat(document.getElementById('length').value) / 1000;
+    const W = parseFloat(document.getElementById('width').value) / 1000;
+    const T = parseFloat(document.getElementById('thickness').value) / 1000;
+    const D = parseFloat(document.getElementById('density').value);
+    const mass = L * W * T * D * 1000; // в кг
+    document.getElementById('result').innerText = `Масса: ${mass.toFixed(3)} кг`;
+  }
+</script>
