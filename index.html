@@ -4,54 +4,508 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Электроаппарат</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #1e1e1e;
+      font-family: 'Segoe UI', sans-serif;
+      color: #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding-top: 80px;
+    }
+
+    header {
+      position: relative;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .logo-circle {
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: #00ffe0;
+      box-shadow: 0 0 12px rgba(0, 255, 224, 0.4);
+      animation: breathe 4s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0%, 100% {
+        opacity: 0.3;
+        transform: translateX(-50%) scale(1);
+      }
+      50% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1.15);
+      }
+    }
+
+    .brand-title {
+      font-size: 2rem;
+      color: #ffffff;
+      letter-spacing: 2px;
+    }
+
+    .intro-text p {
+      font-size: 1rem;
+      color: #aaa;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .main-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding-bottom: 40px;
+    }
+
+    .nav-block {
+      padding: 20px 30px;
+      border: 1px solid #444;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #e0e0e0;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(6px);
+      transition: all 0.3s ease;
+    }
+
+    .nav-block:hover {
+      background: rgba(0, 255, 224, 0.08);
+      box-shadow: 0 0 12px rgba(0, 255, 224, 0.2);
+      transform: translateY(-2px);
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Электроаппарат</h1>
-    <p>NerSz</p>
+  <header>
+    <div class="logo-circle"></div>
+    <h1 class="brand-title">Электроаппарат</h1>
+  </header>
 
-    <div class="button-grid">
-      <button class="button" onclick="openCalculator()">Калькулятор</button>
-      <button class="button" onclick="openCenters()">Рабочие центры</button>
-    </div>
+  <main>
+    <section class="intro-text">
+      <p>Цифровой портал будущего. Инженерная точность. Абсолютный минимализм.</p>
+    </section>
+    <nav class="main-nav">
+      <a class="nav-block" href="#">Участки производства</a>
+      <a class="nav-block" href="#">Инструменты ЭА</a>
+      <a class="nav-block" href="#">Трудоёмкость</a>
+      <a class="nav-block" href="#">Техпроцессы</a>
+      <a class="nav-block" href="#">Техподдержка</a>
+    </nav>
+  </main>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Электроаппарат — Участки производства</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #1b1b1b;
+      color: #f1f1f1;
+    }
 
-    <div id="calculator" class="hidden">
-      <h2>Калькулятор по металлу</h2>
-      <input type="number" id="length" placeholder="Длина, мм" />
-      <input type="number" id="width" placeholder="Ширина, мм" />
-      <input type="number" id="thickness" placeholder="Толщина, мм" />
-      <input type="number" id="density" placeholder="Плотность, г/см³ (по умолч. 7.85)" />
-      <button onclick="calculateWeight()">Рассчитать</button>
-      <p id="result"></p>
+    header {
+      background: rgba(30, 30, 30, 0.8);
+      padding: 20px;
+      text-align: center;
+      font-size: 28px;
+      letter-spacing: 2px;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #333;
+    }
+
+    .section {
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #252525;
+      border: 1px solid #333;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #333;
+    }
+
+    th {
+      background-color: #2f2f2f;
+      color: #00e0ff;
+    }
+
+    tr:hover {
+      background-color: #2a2a2a;
+    }
+
+    .label {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      background: #00e0ff20;
+      color: #00e0ff;
+      font-size: 12px;
+      margin-left: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    ЭА <span class="label">Участки производства</span>
+  </header>
+
+  <div class="section">
+    <h2>Производственные участки</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Код участка</th>
+          <th>Наименование</th>
+          <th>Код ТКК</th>
+          <th>Участок контроля</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>0600</td>
+          <td>Цех №6 — Механика</td>
+          <td>QA-06</td>
+          <td>Контроль механообработки</td>
+        </tr>
+        <tr>
+          <td>0400</td>
+          <td>Цех №4 — Сборка трансформаторов</td>
+          <td>QA-04</td>
+          <td>Контроль сборки</td>
+        </tr>
+        <tr>
+          <td>0500</td>
+          <td>Цех №5 — Сборка</td>
+          <td>QA-05</td>
+          <td>Контроль конечной сборки</td>
+        </tr>
+        <tr>
+          <td>0910</td>
+          <td>Отдел испытаний</td>
+          <td>QA-09</td>
+          <td>Испытательная станция</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>ЭА — Инструменты</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #1a1a1a;
+      color: #e0e0e0;
+    }
+
+    header {
+      background: rgba(30, 30, 30, 0.8);
+      padding: 20px;
+      text-align: center;
+      font-size: 28px;
+      letter-spacing: 1px;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #333;
+    }
+
+    .section {
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 22px;
+      margin-bottom: 30px;
+    }
+
+    .tools-block {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .card {
+      background: #222;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 20px;
+      width: 280px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 15px rgba(0, 224, 255, 0.2);
+    }
+
+    .card-title {
+      font-size: 18px;
+      color: #00e0ff;
+      margin-bottom: 10px;
+    }
+
+    .item {
+      font-size: 14px;
+      padding: 4px 0;
+      border-bottom: 1px solid #333;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    ЭА <span style="font-size:16px; color:#00e0ff;">Инструменты</span>
+  </header>
+
+  <div class="section">
+    <h2>Инструменты Электроаппарата</h2>
+    <div class="tools-block">
+      
+      <div class="card">
+        <div class="card-title">Мерительные инструменты</div>
+        <div class="item">Штангенциркуль</div>
+        <div class="item">Микрометр</div>
+        <div class="item">Калибр-пробка</div>
+        <div class="item">Калибр-кольцо</div>
+        <div class="item">Индикатор часового типа</div>
+        <div class="item">Угломер</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Режущие инструменты</div>
+        <div class="item">Токарный резец 16×10×100</div>
+        <div class="item">Отрезной резец 25×16×140</div>
+        <div class="item">Сверло Ø8 ГОСТ 10902</div>
+        <div class="item">Фреза дисковая 125×6</div>
+        <div class="item">Плашка М12×1.75 ГОСТ 9740</div>
+        <div class="item">Зенкер ручной</div>
+      </div>
+
     </div>
   </div>
 
-  <script>
-    function openCalculator() {
-      document.getElementById('calculator').classList.remove('hidden');
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>ЭА — Расчёт металла</title>
+  <style>
+    body {
+      background-color: #181818;
+      font-family: 'Segoe UI', sans-serif;
+      color: #eaeaea;
+      margin: 0;
+      padding: 0;
     }
 
-    function openCenters() {
-      alert("Модуль 'Рабочие центры' пока в разработке");
+    header {
+      text-align: center;
+      padding: 30px 20px;
+      background: rgba(20, 20, 20, 0.9);
+      font-size: 24px;
+      letter-spacing: 1px;
+      border-bottom: 1px solid #333;
     }
 
-    function calculateWeight() {
-      const length = parseFloat(document.getElementById('length').value) / 10; // мм в см
-      const width = parseFloat(document.getElementById('width').value) / 10;
-      const thickness = parseFloat(document.getElementById('thickness').value) / 10;
-      const density = parseFloat(document.getElementById('density').value) || 7.85;
-
-      if (isNaN(length) || isNaN(width) || isNaN(thickness)) {
-        document.getElementById('result').textContent = "Введите все размеры!";
-        return;
-      }
-
-      const volume = length * width * thickness; // в см³
-      const mass = volume * density / 1000; // в кг
-
-      document.getElementById('result').textContent = `Масса заготовки: ${mass.toFixed(2)} кг`;
+    .section {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #222;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,224,255,0.1);
     }
-  </script>
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-size: 15px;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      margin-top: 5px;
+      border-radius: 6px;
+      background: #333;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      font-size: 16px;
+      background-color: #00e0ff;
+      border: none;
+      color: #000;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #00aacc;
+    }
+
+    .result {
+      margin-top: 30px;
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid #00e0ff;
+    }
+  </style>
+</head>
+<body>
+
+<header>ЭА — Расчёт металла</header>
+
+<div class="section">
+  <label for="form">Форма материала:</label>
+  <select id="form">
+    <option value="sheet">Лист</option>
+    <option value="circle">Круг</option>
+    <option value="pipe">Труба</option>
+  </select>
+
+  <label for="material">Материал:</label>
+  <select id="material">
+    <option value="steel">Сталь (ρ = 7.85 г/см³)</option>
+    <option value="aluminum">Алюминий (ρ = 2.7 г/см³)</option>
+    <option value="brass">Латунь (ρ = 8.4 г/см³)</option>
+  </select>
+
+  <label id="dim1-label" for="dim1">Толщина (мм):</label>
+  <input type="number" id="dim1" />
+
+  <label id="dim2-label" for="dim2">Ширина (мм):</label>
+  <input type="number" id="dim2" />
+
+  <label id="dim3-label" for="dim3">Длина (мм):</label>
+  <input type="number" id="dim3" />
+
+  <button onclick="calculate()">Рассчитать</button>
+
+  <div class="result" id="result" style="display:none;"></div>
+</div>
+
+<script>
+  const formSelect = document.getElementById("form");
+  const dim1Label = document.getElementById("dim1-label");
+  const dim2Label = document.getElementById("dim2-label");
+  const dim3Label = document.getElementById("dim3-label");
+
+  formSelect.addEventListener("change", updateLabels);
+
+  function updateLabels() {
+    const form = formSelect.value;
+    if (form === "sheet") {
+      dim1Label.textContent = "Толщина (мм):";
+      dim2Label.textContent = "Ширина (мм):";
+      dim3Label.textContent = "Длина (мм):";
+    } else if (form === "circle") {
+      dim1Label.textContent = "Диаметр (мм):";
+      dim2Label.textContent = "Длина (мм):";
+      dim3Label.textContent = " — (не используется)";
+    } else if (form === "pipe") {
+      dim1Label.textContent = "Внешний диаметр (мм):";
+      dim2Label.textContent = "Толщина стенки (мм):";
+      dim3Label.textContent = "Длина (мм):";
+    }
+  }
+
+  function getDensity(material) {
+    switch(material) {
+      case "steel": return 7.85;
+      case "aluminum": return 2.7;
+      case "brass": return 8.4;
+      default: return 0;
+    }
+  }
+
+  function calculate() {
+    const form = document.getElementById("form").value;
+    const material = document.getElementById("material").value;
+    const d1 = parseFloat(document.getElementById("dim1").value);
+    const d2 = parseFloat(document.getElementById("dim2").value);
+    const d3 = parseFloat(document.getElementById("dim3").value);
+    const rho = getDensity(material);
+
+    let volume_cm3 = 0;
+
+    if (form === "sheet") {
+      volume_cm3 = d1 * d2 * d3 / 1000;
+    } else if (form === "circle") {
+      volume_cm3 = Math.PI * (d1/2)**2 * d2 / 1000;
+    } else if (form === "pipe") {
+      const outer = Math.PI * (d1/2)**2;
+      const inner = Math.PI * ((d1 - 2*d2)/2)**2;
+      volume_cm3 = (outer - inner) * d3 / 1000;
+    }
+
+    const mass = volume_cm3 * rho / 1000;
+
+    document.getElementById("result").style.display = "block";
+    document.getElementById("result").innerHTML =
+      `<strong>Объём:</strong> ${volume_cm3.toFixed(2)} см³<br>
+       <strong>Масса:</strong> ${mass.toFixed(2)} кг`;
+  }
+
+  updateLabels(); // Инициализация
+</script>
+
 </body>
 </html>
